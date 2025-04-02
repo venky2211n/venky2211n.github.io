@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login System</title>
+  <script>
+    async function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      const scriptUrl = "https://script.google.com/macros/s/AKfycbyM4B_FB2qaCTP2DZuHpYK3M8Lh9pgpVmoZjFzuiCeBCZlL87QcENH43f4JnAkKMsFpJQ/exec"; // Replace with your Web App URL
+      const fullUrl = `${scriptUrl}?username=${username}&password=${password}`;
+
+      try {
+        const response = await fetch(fullUrl, { method: "POST", body: JSON.stringify({ username, password }) });
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById("status").innerHTML = `<h3 style="color:green;">✅ ${data.message}</h3>`;
+          setTimeout(() => {
+            window.location.href = `dashboard.html?role=${data.role}`; // Redirect based on role
+          }, 1500);
+        } else {
+          document.getElementById("status").innerHTML = `<h3 style="color:red;">❌ ${data.message}</h3>`;
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("status").innerHTML = "Error logging in.";
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>🔑 Login</h2>
+  <input type="text" id="username" placeholder="Enter Username"><br><br>
+  <input type="password" id="password" placeholder="Enter Password"><br><br>
+  <button onclick="login()">Login</button>
+  <p id="status"></p>
+</body>
+</html>
