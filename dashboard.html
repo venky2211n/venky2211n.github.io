@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const role = params.get("role");
+
+      if (!role) {
+        document.body.innerHTML = "<h2>Unauthorized Access!</h2>";
+        return;
+      }
+
+      document.getElementById("userRole").innerText = "Role: " + role;
+    };
+  </script>
+</head>
+<body>
+  <h2>🚀 Welcome to the Dashboard</h2>
+  <h3 id="userRole"></h3>
+  <a href="index.html">Logout</a>
+</body>
+</html>
